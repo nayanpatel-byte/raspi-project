@@ -1,0 +1,114 @@
+**ROLE:**
+You are a senior computer vision engineer with 15+ years of experience in real-time embedded systems, drone vision pipelines, and low-latency algorithm design. You specialize in highly optimized classical computer vision using OpenCV and NumPy for resource-constrained systems like Raspberry Pi.
+
+---
+
+**CONTEXT:**
+I am building a drone system that uses VIO (Visual-Inertial Odometry), ORB-SLAM3, and PX4Flow for navigation. I need a **lightweight, real-time Red Zone Detection module** that can run efficiently on Raspberry Pi (4/5) and integrate seamlessly into a larger autonomy stack.
+
+The purpose of this module is to:
+
+* Detect red-colored regions (markers, painted zones, or arbitrary red areas)
+* Merge detected regions into a unified polygon (Red Zone)
+* Continuously update the polygon as the drone moves and perspective changes
+* Provide stable outputs for integration with SLAM and path planning systems
+* Log detailed performance and detection metrics into a CSV file
+
+No machine learning or training should be used. The solution must rely purely on classical computer vision techniques.
+
+---
+
+**OBJECTIVE:**
+Generate highly optimized, production-ready Python code for a **real-time Red Zone Detection system** that:
+
+1. Processes live video feed (webcam / camera stream)
+2. Detects red regions using HSV color segmentation
+3. Applies morphological operations to merge nearby regions
+4. Extracts contours and filters noise using area thresholds
+5. Constructs a polygon using convex hull from valid regions
+6. Applies lightweight temporal stabilization across frames
+7. Outputs polygon data (centroid, vertices, area)
+8. Logs detailed system and detection metrics into a CSV file efficiently (batched logging)
+
+---
+
+**CONSTRAINTS (VERY IMPORTANT):**
+
+* Must run efficiently on Raspberry Pi (low CPU usage)
+* Avoid heavy computations and unnecessary loops
+* Use vectorized operations wherever possible
+* No deep learning / no model training
+* Minimize latency (<50 ms per frame target)
+* Use frame resizing to reduce computation
+* Use only lightweight libraries:
+
+  * OpenCV
+  * NumPy
+  * psutil (for system metrics)
+* CSV logging must be buffered (not written every frame)
+* Code should be modular and easy to integrate later into ROS or MAVLink pipelines
+
+---
+
+**FUNCTIONAL REQUIREMENTS:**
+
+* HSV-based dual red mask detection
+* Morphological closing to merge regions
+* Contour extraction and filtering
+* Convex hull polygon generation
+* Centroid calculation
+* Frame-to-frame polygon variation tracking
+* Real-time FPS calculation
+* CPU and memory monitoring
+* Batched CSV logging
+
+---
+
+**OUTPUT REQUIREMENTS:**
+
+Generate:
+
+1. Clean, well-structured Python code (single file)
+2. Modular functions (not one long script)
+3. Inline comments explaining critical optimizations
+4. Configurable parameters (thresholds, resolution, etc.)
+5. Efficient main loop for live video processing
+6. CSV logging implementation with all key metrics
+7. Minimal but clear visualization (polygon overlay + FPS)
+
+---
+
+**QUALITY EXPECTATIONS:**
+
+* Code should be production-grade, not prototype
+* Avoid redundant computations
+* Ensure stability (no flickering polygons)
+* Ensure readability + performance balance
+* Design should allow easy extension for:
+
+  * VIO integration
+  * World coordinate transformation
+  * ROS node conversion
+
+---
+
+**DO NOT:**
+
+* Use any deep learning models
+* Use unnecessary abstractions or heavy frameworks
+* Write inefficient loops where vectorization is possible
+* Ignore real-time constraints
+
+---
+
+**OPTIONAL (IF POSSIBLE):**
+
+* Suggest micro-optimizations for Raspberry Pi
+* Add hooks/placeholders for future ROS integration
+
+---
+
+**FINAL GOAL:**
+
+Deliver a **lightweight, real-time, integration-ready Red Zone Detection module** suitable for drone autonomy systems.
+
